@@ -6,25 +6,10 @@ import (
 	"log"
 	"net/http"
 	"slices"
+
+	"nfl-data/cards"
+	"nfl-data/types"
 )
-
-type Player struct {
-	Name     string `json:"name"`
-	Jersey   string `json:"jersey"`
-	Position string `json:"position"`
-}
-
-type TeamColor struct {
-	Type     string `json:"type"`
-	HexColor string `json:"hex_color"`
-}
-
-type Team struct {
-	Name       string      `json:"name"`
-	Market     string      `json:"market"`
-	TeamColors []TeamColor `json:"team_colors"`
-	Players    []Player    `json:"players"`
-}
 
 func GetTeam(teamId *string) {
 	sportradarKey := GetSportraderAPIKey()
@@ -52,12 +37,12 @@ func GetTeam(teamId *string) {
 		}
 	}()
 
-	var result Team
+	var result types.Team
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return
 	}
 
-	primaryColor, secondaryColor := GetTeamColors(&result.TeamColors)
+	primaryColor, secondaryColor := cards.GetTeamColors(&result.TeamColors)
 
 	var uniquePositions []string
 
@@ -76,13 +61,13 @@ func GetTeam(teamId *string) {
 			break
 		}
 
-		var players []Player
+		var players []types.Player
 		for _, player := range result.Players {
 			if player.Position == position {
 				players = append(players, player)
 			}
 		}
 
-		DisplayCards(&primaryColor, &secondaryColor, &players)
+		cards.DisplayPlayerCards(&primaryColor, &secondaryColor, &players)
 	}
 }
