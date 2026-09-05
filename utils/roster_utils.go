@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"slices"
 
 	"github.com/charmbracelet/lipgloss"
 )
@@ -70,12 +71,16 @@ func GetTeam(teamId *string) {
 		}
 	}
 
+	var positions []string
+
 	fmt.Printf("Team: %s %s\n", result.Name, result.Market)
 	for _, player := range result.Players {
 		jersey := player.Jersey
 		if player.Jersey == "" {
 			jersey = "No jersey number"
 		}
+
+		positions = append(positions, player.Position)
 
 		cardStyle := lipgloss.NewStyle().
 			Border(lipgloss.RoundedBorder()).
@@ -105,5 +110,10 @@ func GetTeam(teamId *string) {
 		)
 
 		fmt.Println(cardStyle.Render(content))
+	}
+
+	slices.Sort(positions)
+	for _, position := range slices.Compact(positions) {
+		fmt.Println(position)
 	}
 }
