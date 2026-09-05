@@ -21,7 +21,6 @@ func main() {
 	if choice == "roster" {
 		utils.GetTeam(&teamId)
 	} else {
-		year := utils.GetYear()
-		utils.GetSchedule(&year, &teamId)
+		utils.GetSchedule(&teamId)
 	}
 }

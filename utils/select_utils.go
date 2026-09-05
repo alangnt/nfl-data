@@ -7,26 +7,6 @@ import (
 	"github.com/charmbracelet/huh"
 )
 
-func GetYear() string {
-	var year string
-
-	err := huh.NewSelect[string]().
-		Title("What year?").
-		Options(
-			huh.NewOption("2026", "2026"),
-			huh.NewOption("2025", "2025"),
-		).
-		Value(&year).
-		Run()
-
-	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
-	}
-
-	return year
-}
-
 func GetConference() string {
 	var conference string
 
