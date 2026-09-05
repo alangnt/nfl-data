@@ -5,10 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/joho/godotenv"
 )
 
 type Player struct {
@@ -24,15 +22,7 @@ type Roster struct {
 }
 
 func GetTeam(teamId *string) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	sportradar := os.Getenv("SPORTRADAR_API_KEY")
-	if sportradar == "" {
-		log.Fatal("API key required")
-	}
+	sportradarKey := GetSportraderAPIKey()
 
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + *teamId + "/full_roster.json"
 
@@ -42,7 +32,7 @@ func GetTeam(teamId *string) {
 	}
 
 	req.Header.Set("accept", "application/json")
-	req.Header.Set("x-api-key", sportradar)
+	req.Header.Set("x-api-key", sportradarKey)
 
 	client := &http.Client{}
 

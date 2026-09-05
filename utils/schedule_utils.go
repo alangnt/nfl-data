@@ -5,10 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
-
-	"github.com/joho/godotenv"
 )
 
 type GameTeam struct {
@@ -39,15 +36,7 @@ type Schedule struct {
 }
 
 func GetSchedule(teamId *string) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	sportradar := os.Getenv("SPORTRADAR_API_KEY")
-	if sportradar == "" {
-		log.Fatal("API key required")
-	}
+	sportradarKey := GetSportraderAPIKey()
 
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/2026/REG/schedule.json"
 
@@ -57,7 +46,7 @@ func GetSchedule(teamId *string) {
 	}
 
 	req.Header.Set("accept", "application/json")
-	req.Header.Set("x-api-key", sportradar)
+	req.Header.Set("x-api-key", sportradarKey)
 
 	client := &http.Client{}
 
