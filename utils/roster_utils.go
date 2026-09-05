@@ -80,7 +80,9 @@ func GetTeam(teamId *string) {
 		cardStyle := lipgloss.NewStyle().
 			Border(lipgloss.RoundedBorder()).
 			BorderForeground(lipgloss.Color(primaryColor)).
+			BorderBackground(lipgloss.Color(primaryColor)).
 			Padding(1, 2).
+			Margin(1, 0).
 			Width(32)
 
 		nameStyle := lipgloss.NewStyle().
