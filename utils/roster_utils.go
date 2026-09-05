@@ -15,7 +15,7 @@ type Player struct {
 	Position string `json:"position"`
 }
 
-type Roster struct {
+type Team struct {
 	Name    string   `json:"name"`
 	Market  string   `json:"market"`
 	Players []Player `json:"players"`
@@ -24,7 +24,7 @@ type Roster struct {
 func GetTeam(teamId *string) {
 	sportradarKey := GetSportraderAPIKey()
 
-	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + *teamId + "/full_roster.json"
+	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + *teamId + "/profile.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -47,7 +47,7 @@ func GetTeam(teamId *string) {
 		}
 	}()
 
-	var result Roster
+	var result Team
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return
 	}
