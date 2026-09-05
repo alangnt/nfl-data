@@ -114,3 +114,25 @@ func GetTeamInfoChoice() string {
 
 	return choice
 }
+
+func GetPosition(positions []string) string {
+	var choice string
+
+	var options []huh.Option[string]
+	for _, position := range positions {
+		options = append(options, huh.NewOption(position, position))
+	}
+
+	err := huh.NewSelect[string]().
+		Title("Select a position").
+		Options(options...).
+		Value(&choice).
+		Run()
+
+	if err != nil {
+		fmt.Println("Selection cancelled:", err)
+		os.Exit(1)
+	}
+
+	return choice
+}
