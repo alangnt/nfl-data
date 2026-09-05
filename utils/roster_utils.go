@@ -6,8 +6,6 @@ import (
 	"log"
 	"net/http"
 	"slices"
-
-	"github.com/charmbracelet/lipgloss"
 )
 
 type Player struct {
@@ -59,61 +57,26 @@ func GetTeam(teamId *string) {
 		return
 	}
 
-	var primaryColor string
-	var secondaryColor string
+	primaryColor, secondaryColor := GetTeamColors(&result.TeamColors)
 
-	for _, color := range result.TeamColors {
-		if color.Type == "primary" {
-			primaryColor = color.HexColor
-		}
-		if color.Type == "secondary" {
-			secondaryColor = color.HexColor
-		}
-	}
-
-	var positions []string
+	var uniquePositions []string
 
 	fmt.Printf("Team: %s %s\n", result.Name, result.Market)
 	for _, player := range result.Players {
-		jersey := player.Jersey
-		if player.Jersey == "" {
-			jersey = "No jersey number"
+		uniquePositions = append(uniquePositions, player.Position)
+	}
+
+	slices.Sort(uniquePositions)
+	positions := slices.Compact(uniquePositions)
+
+	position := GetPosition(&positions)
+
+	var players []Player
+	for _, player := range result.Players {
+		if player.Position == position {
+			players = append(players, player)
 		}
-
-		positions = append(positions, player.Position)
-
-		cardStyle := lipgloss.NewStyle().
-			Border(lipgloss.RoundedBorder()).
-			BorderForeground(lipgloss.Color(primaryColor)).
-			BorderBackground(lipgloss.Color(primaryColor)).
-			Padding(1, 2).
-			Margin(1, 0).
-			Width(32)
-
-		nameStyle := lipgloss.NewStyle().
-			Bold(true).
-			Foreground(lipgloss.Color(secondaryColor))
-
-		labelStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#9CA3AF"))
-
-		valStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color(secondaryColor)).
-			Bold(true)
-
-		content := lipgloss.JoinVertical(
-			lipgloss.Left,
-			nameStyle.Render(player.Name),
-			"",
-			lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Jersey:   "), valStyle.Render(jersey)),
-			lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Position: "), valStyle.Render(player.Position)),
-		)
-
-		fmt.Println(cardStyle.Render(content))
 	}
 
-	slices.Sort(positions)
-	for _, position := range slices.Compact(positions) {
-		fmt.Println(position)
-	}
+	DisplayCards(&primaryColor, &secondaryColor, &players)
 }
