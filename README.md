@@ -39,8 +39,8 @@ nfl-data/
 ├── types/
 │   └── types.go
 ├── cards/
-│   ├── game_card.go
-│   └── player_card.go
+│   ├── game_cards.go
+│   └── player_cards.go
 └── utils/
     ├── env_utils.go
     ├── roster_utils.go
