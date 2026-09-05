@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -21,20 +22,23 @@ type Scoring struct {
 }
 
 type Game struct {
-	Home    GameTeam `json:"home"`
-	Away    GameTeam `json:"away"`
-	Scoring Scoring  `json:"scoring"`
+	Home      GameTeam `json:"home"`
+	Away      GameTeam `json:"away"`
+	Scoring   Scoring  `json:"scoring"`
+	Status    string   `json:"status"`
+	Scheduled string   `json:"scheduled"`
 }
 
 type Week struct {
 	Games []Game `json:"games"`
+	Title string `json:"title"`
 }
 
 type Schedule struct {
 	Weeks []Week `json:"weeks"`
 }
 
-func GetSchedule(year *string, teamId *string) {
+func GetSchedule(teamId *string) {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -45,7 +49,7 @@ func GetSchedule(year *string, teamId *string) {
 		log.Fatal("API key required")
 	}
 
-	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + *year + "/REG/schedule.json"
+	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/2026/REG/schedule.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -73,5 +77,23 @@ func GetSchedule(year *string, teamId *string) {
 		return
 	}
 
-	fmt.Println(result)
+	for _, week := range result.Weeks {
+		for _, game := range week.Games {
+			if game.Home.ID == *teamId || game.Away.ID == *teamId {
+				parsedTime, err := time.Parse(time.RFC3339, game.Scheduled)
+				if err != nil {
+					fmt.Println("Error parsing date:", err)
+					return
+				}
+
+				timeFormat := "Monday, Jan 2, 2006 at 3:04 PM"
+				date := parsedTime.Format(timeFormat)
+
+				fmt.Printf("Week %s\n", week.Title)
+				fmt.Println(game.Home.Name)
+				fmt.Println(game.Away.Name)
+				fmt.Printf("Date: %s\n\n", date)
+			}
+		}
+	}
 }
