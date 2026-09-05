@@ -85,5 +85,4 @@ func GetTeam(teamId *string) {
 
 		DisplayCards(&primaryColor, &secondaryColor, &players)
 	}
-
 }
