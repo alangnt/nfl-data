@@ -15,10 +15,16 @@ type Player struct {
 	Position string `json:"position"`
 }
 
+type TeamColor struct {
+	Type     string `json:"type"`
+	HexColor string `json:"hex_color"`
+}
+
 type Team struct {
-	Name    string   `json:"name"`
-	Market  string   `json:"market"`
-	Players []Player `json:"players"`
+	Name       string      `json:"name"`
+	Market     string      `json:"market"`
+	TeamColors []TeamColor `json:"team_colors"`
+	Players    []Player    `json:"players"`
 }
 
 func GetTeam(teamId *string) {
@@ -52,6 +58,18 @@ func GetTeam(teamId *string) {
 		return
 	}
 
+	var primaryColor string
+	var secondaryColor string
+
+	for _, color := range result.TeamColors {
+		if color.Type == "primary" {
+			primaryColor = color.HexColor
+		}
+		if color.Type == "secondary" {
+			secondaryColor = color.HexColor
+		}
+	}
+
 	fmt.Printf("Team: %s %s\n", result.Name, result.Market)
 	for _, player := range result.Players {
 		jersey := player.Jersey
@@ -61,19 +79,19 @@ func GetTeam(teamId *string) {
 
 		cardStyle := lipgloss.NewStyle().
 			Border(lipgloss.RoundedBorder()).
-			BorderForeground(lipgloss.Color("#E31837")). // Chiefs Red
+			BorderForeground(lipgloss.Color(primaryColor)).
 			Padding(1, 2).
 			Width(32)
 
 		nameStyle := lipgloss.NewStyle().
 			Bold(true).
-			Foreground(lipgloss.Color("#FFFFFF"))
+			Foreground(lipgloss.Color(secondaryColor))
 
 		labelStyle := lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#9CA3AF"))
 
 		valStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#F3F4F6")).
+			Foreground(lipgloss.Color(secondaryColor)).
 			Bold(true)
 
 		content := lipgloss.JoinVertical(
