@@ -115,12 +115,12 @@ func GetTeamInfoChoice() string {
 	return choice
 }
 
-func GetPosition(positions []string) string {
+func GetPosition(positions []*string) string {
 	var choice string
 
 	var options []huh.Option[string]
 	for _, position := range positions {
-		options = append(options, huh.NewOption(position, position))
+		options = append(options, huh.NewOption(*position, *position))
 	}
 
 	err := huh.NewSelect[string]().
