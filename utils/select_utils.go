@@ -122,6 +122,7 @@ func GetPosition(positions *[]string) string {
 	for _, position := range *positions {
 		options = append(options, huh.NewOption(position, position))
 	}
+	options = append(options, huh.NewOption("Exit", "exit"))
 
 	err := huh.NewSelect[string]().
 		Title("Select a position").

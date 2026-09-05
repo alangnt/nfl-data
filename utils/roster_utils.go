@@ -69,14 +69,21 @@ func GetTeam(teamId *string) {
 	slices.Sort(uniquePositions)
 	positions := slices.Compact(uniquePositions)
 
-	position := GetPosition(&positions)
+	for {
+		position := GetPosition(&positions)
 
-	var players []Player
-	for _, player := range result.Players {
-		if player.Position == position {
-			players = append(players, player)
+		if position == "exit" {
+			break
 		}
+
+		var players []Player
+		for _, player := range result.Players {
+			if player.Position == position {
+				players = append(players, player)
+			}
+		}
+
+		DisplayCards(&primaryColor, &secondaryColor, &players)
 	}
 
-	DisplayCards(&primaryColor, &secondaryColor, &players)
 }
