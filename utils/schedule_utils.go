@@ -2,38 +2,12 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
-	"time"
+
+	"nfl-data/cards"
+	"nfl-data/types"
 )
-
-type GameTeam struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
-type Scoring struct {
-	HomePoints int `json:"home_points"`
-	AwayPoints int `json:"away_points"`
-}
-
-type Game struct {
-	Home      GameTeam `json:"home"`
-	Away      GameTeam `json:"away"`
-	Scoring   Scoring  `json:"scoring"`
-	Status    string   `json:"status"`
-	Scheduled string   `json:"scheduled"`
-}
-
-type Week struct {
-	Games []Game `json:"games"`
-	Title string `json:"title"`
-}
-
-type Schedule struct {
-	Weeks []Week `json:"weeks"`
-}
 
 func GetSchedule(teamId *string) {
 	sportradarKey := GetSportraderAPIKey()
@@ -61,28 +35,20 @@ func GetSchedule(teamId *string) {
 		}
 	}()
 
-	var result Schedule
+	var result types.Schedule
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return
 	}
 
+	games := make(map[string]types.Game)
+
 	for _, week := range result.Weeks {
 		for _, game := range week.Games {
 			if game.Home.ID == *teamId || game.Away.ID == *teamId {
-				parsedTime, err := time.Parse(time.RFC3339, game.Scheduled)
-				if err != nil {
-					fmt.Println("Error parsing date:", err)
-					return
-				}
-
-				timeFormat := "Monday, Jan 2, 2006 at 3:04 PM"
-				date := parsedTime.Format(timeFormat)
-
-				fmt.Printf("Week %s\n", week.Title)
-				fmt.Println(game.Home.Name)
-				fmt.Println(game.Away.Name)
-				fmt.Printf("Date: %s\n\n", date)
+				games[week.Title] = game
 			}
 		}
 	}
+
+	cards.DisplayGameCards(&games)
 }
