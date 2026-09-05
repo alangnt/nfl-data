@@ -1,5 +1,13 @@
 # NFL Data in Go
 
+This project in Go allows anyone to get the full active **roster** and **schedule** of any team in the NFL.
+
+## Run the project
+
+```go
+go run .
+```
+
 ## Go Linter
 
 ```bash
