@@ -40,12 +40,12 @@ func GetSchedule(teamId *string, year *string) {
 		return
 	}
 
-	games := make(map[string]types.Game)
+	var games []types.Game
 
 	for _, week := range result.Weeks {
 		for _, game := range week.Games {
 			if game.Home.ID == *teamId || game.Away.ID == *teamId {
-				games[week.Title] = game
+				games = append(games, game)
 			}
 		}
 	}

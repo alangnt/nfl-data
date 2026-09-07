@@ -19,8 +19,8 @@ type Game struct {
 }
 
 type Week struct {
-	Games []Game `json:"games"`
-	Title string `json:"title"`
+	Games    []Game `json:"games"`
+	Sequence int    `json:"sequence"`
 }
 
 type Schedule struct {
