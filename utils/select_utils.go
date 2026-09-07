@@ -71,6 +71,7 @@ func GetAFCTeamId() string {
 			huh.NewOption("New York Jets", "5fee86ae-74ab-4bdd-8416-42a9dd9964f3"),
 			huh.NewOption("Pittsburgh Steelers", "cb2f9f1f-ac67-424e-9e72-1475cb0ed398"),
 			huh.NewOption("Tennessee Titans", "d26a1ca5-722d-4274-8f97-c92e49c96315"),
+			huh.NewOption("Exit", "exit"),
 		).
 		Value(&teamId).
 		Run()
@@ -105,6 +106,7 @@ func GetNFCTeamId() string {
 			huh.NewOption("Seattle Seahawks", "3d08af9e-c767-4f88-a7dc-b920c6d2b4a8"),
 			huh.NewOption("Tampa Bay Buccaneers", "4254d319-1bc7-4f81-b4ab-b5e6f3402b69"),
 			huh.NewOption("Washington Commanders", "22052ff7-c065-42ee-bc8f-c4691c50e624"),
+			huh.NewOption("Exit", "exit"),
 		).
 		Value(&teamId).
 		Run()

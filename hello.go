@@ -14,26 +14,32 @@ func main() {
 			break
 		}
 
-		var teamId string
+		for {
+			var teamId string
 
-		if conference == "afc" {
-			teamId = utils.GetAFCTeamId()
-		} else {
-			teamId = utils.GetNFCTeamId()
-		}
+			if conference == "afc" {
+				teamId = utils.GetAFCTeamId()
+			} else {
+				teamId = utils.GetNFCTeamId()
+			}
 
-		choice := utils.GetTeamInfoChoice()
-		if choice == "roster" {
-			utils.GetTeam(&teamId)
-		} else {
-			for {
-				year := utils.GetYear()
+			if teamId == "exit" {
+				break
+			}
 
-				if year == "exit" {
-					break
+			choice := utils.GetTeamInfoChoice()
+			if choice == "roster" {
+				utils.GetTeam(&teamId)
+			} else {
+				for {
+					year := utils.GetYear()
+
+					if year == "exit" {
+						break
+					}
+
+					utils.GetSchedule(&teamId, &year)
 				}
-
-				utils.GetSchedule(&teamId, &year)
 			}
 		}
 	}
