@@ -7,21 +7,34 @@ import (
 )
 
 func main() {
-	conference := utils.GetConference()
+	for {
+		conference := utils.GetConference()
 
-	var teamId string
+		if conference == "exit" {
+			break
+		}
 
-	if conference == "afc" {
-		teamId = utils.GetAFCTeamId()
-	} else {
-		teamId = utils.GetNFCTeamId()
-	}
+		var teamId string
 
-	choice := utils.GetTeamInfoChoice()
-	if choice == "roster" {
-		utils.GetTeam(&teamId)
-	} else {
-		year := utils.GetYear()
-		utils.GetSchedule(&teamId, &year)
+		if conference == "afc" {
+			teamId = utils.GetAFCTeamId()
+		} else {
+			teamId = utils.GetNFCTeamId()
+		}
+
+		choice := utils.GetTeamInfoChoice()
+		if choice == "roster" {
+			utils.GetTeam(&teamId)
+		} else {
+			for {
+				year := utils.GetYear()
+
+				if year == "exit" {
+					break
+				}
+
+				utils.GetSchedule(&teamId, &year)
+			}
+		}
 	}
 }

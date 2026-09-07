@@ -15,6 +15,7 @@ func GetYear() string {
 		Options(
 			huh.NewOption("2026", "2026"),
 			huh.NewOption("2025", "2025"),
+			huh.NewOption("Exit", "exit"),
 		).
 		Value(&year).
 		Run()
@@ -35,6 +36,7 @@ func GetConference() string {
 		Options(
 			huh.NewOption("AFC", "afc"),
 			huh.NewOption("NFC", "nfc"),
+			huh.NewOption("Exit", "exit"),
 		).
 		Value(&conference).
 		Run()
