@@ -9,10 +9,10 @@ import (
 	"nfl-data/types"
 )
 
-func GetSchedule(teamId *string) {
+func GetSchedule(teamId *string, year *string) {
 	sportradarKey := GetSportraderAPIKey()
 
-	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/2026/REG/schedule.json"
+	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + *year + "/REG/schedule.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
