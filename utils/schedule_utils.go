@@ -50,5 +50,5 @@ func GetSchedule(teamId *string, year *string) {
 		}
 	}
 
-	cards.DisplayGameCards(&games)
+	cards.DisplayGameCards(teamId, &games)
 }
