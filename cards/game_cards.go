@@ -3,6 +3,7 @@ package cards
 import (
 	"fmt"
 	"nfl-data/types"
+	"strconv"
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
@@ -17,6 +18,14 @@ func DisplayGameCard(week *string, game *types.Game) string {
 
 	timeFormat := "Monday, Jan 2, 2006 at 3:04 PM"
 	date := parsedTime.Format(timeFormat)
+
+	score := "Not played yet"
+	if game.Status == "closed" {
+		home_points := strconv.Itoa(game.Scoring.HomePoints)
+		away_points := strconv.Itoa(game.Scoring.AwayPoints)
+
+		score = home_points + "-" + away_points
+	}
 
 	cardStyle := lipgloss.NewStyle().
 		Border(lipgloss.RoundedBorder()).
@@ -44,6 +53,8 @@ func DisplayGameCard(week *string, game *types.Game) string {
 		lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Home: "), valStyle.Render(game.Home.Name)),
 		lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Away: "), valStyle.Render(game.Away.Name)),
 		lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Date: "), valStyle.Render(date)),
+		"",
+		lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Score: "), valStyle.Render(score)),
 	)
 
 	return cardStyle.Render(content)
