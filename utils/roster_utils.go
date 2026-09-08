@@ -27,7 +27,7 @@ func GetTeam(teamId *string) {
 	client := &http.Client{}
 
 	resp, err := client.Do(req)
-	if err != nil {
+	if err != nil || resp.StatusCode != 200 {
 		return
 	}
 
