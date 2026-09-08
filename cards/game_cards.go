@@ -53,6 +53,10 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 		Foreground(lipgloss.Color("#008000")).
 		Bold(true)
 
+	tieStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#FFA500")).
+		Bold(true)
+
 	lossStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#FF0000")).
 		Bold(true)
@@ -61,6 +65,8 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 	if game.Status == "closed" {
 		if (*isHomeTeam && home_points > away_points) || (!*isHomeTeam && away_points > home_points) {
 			gameResult = winStyle.Render("W")
+		} else if home_points == away_points {
+			gameResult = tieStyle.Render("Tie")
 		} else {
 			gameResult = lossStyle.Render("L")
 		}
@@ -85,14 +91,4 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 	)
 
 	return cardStyle.Render(content)
-}
-
-func DisplayGameCards(teamId *string, games *[]types.Game, seasonType *string) {
-	for week, game := range *games {
-		isHomeTeam := false
-		if game.Home.ID == *teamId {
-			isHomeTeam = true
-		}
-		fmt.Println(DisplayGameCard(&week, &game, &isHomeTeam, seasonType))
-	}
 }

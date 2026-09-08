@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -40,15 +41,16 @@ func GetSchedule(teamId *string, year *string, seasonType *string) {
 		return
 	}
 
-	var games []types.Game
-
 	for _, week := range result.Weeks {
 		for _, game := range week.Games {
 			if game.Home.ID == *teamId || game.Away.ID == *teamId {
-				games = append(games, game)
+				isHomeTeam := false
+				if game.Home.ID == *teamId {
+					isHomeTeam = true
+				}
+
+				fmt.Println(cards.DisplayGameCard(&week.Sequence, &game, &isHomeTeam, seasonType))
 			}
 		}
 	}
-
-	cards.DisplayGameCards(teamId, &games, seasonType)
 }
