@@ -9,7 +9,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *string) string {
+func DisplayGameCard(week int, game types.Game, isHomeTeam bool, seasonType string) string {
 	parsedTime, err := time.Parse(time.RFC3339, game.Scheduled)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
@@ -65,7 +65,7 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 
 	var gameResult string
 	if game.Status == "closed" {
-		if (*isHomeTeam && home_points > away_points) || (!*isHomeTeam && away_points > home_points) {
+		if (isHomeTeam && home_points > away_points) || (!isHomeTeam && away_points > home_points) {
 			gameResult = winStyle.Render("W")
 		} else if home_points == away_points {
 			gameResult = tieStyle.Render("Tie")
@@ -76,8 +76,8 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 		gameResult = ""
 	}
 
-	gameTitle := nameStyle.Render("Game", strconv.Itoa(*week), gameResult)
-	if *seasonType == "PST" {
+	gameTitle := nameStyle.Render("Game", strconv.Itoa(week), gameResult)
+	if seasonType == "PST" {
 		gameTitle = nameStyle.Render(game.Title, gameResult)
 	}
 

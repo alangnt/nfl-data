@@ -11,10 +11,10 @@ import (
 	"nfl-data/types"
 )
 
-func GetTeam(teamId *string) {
+func GetTeam(teamId string) {
 	sportradarKey := GetSportraderAPIKey()
 
-	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + *teamId + "/profile.json"
+	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + teamId + "/profile.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -40,7 +40,7 @@ func GetTeam(teamId *string) {
 		return
 	}
 
-	primaryColor, secondaryColor := cards.GetTeamColors(&result.TeamColors)
+	primaryColor, secondaryColor := cards.GetTeamColors(result.TeamColors)
 
 	var uniquePositions []string
 
@@ -53,7 +53,7 @@ func GetTeam(teamId *string) {
 	positions := slices.Compact(uniquePositions)
 
 	for {
-		position := GetPosition(&positions)
+		position := GetPosition(positions)
 
 		if position == "exit" {
 			break
@@ -66,6 +66,6 @@ func GetTeam(teamId *string) {
 			}
 		}
 
-		cards.DisplayPlayerCards(&primaryColor, &secondaryColor, &players)
+		cards.DisplayPlayerCards(primaryColor, secondaryColor, players)
 	}
 }

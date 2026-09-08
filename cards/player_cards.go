@@ -7,11 +7,11 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func GetTeamColors(teamColors *[]types.TeamColor) (string, string) {
+func GetTeamColors(teamColors []types.TeamColor) (string, string) {
 	var primaryColor string
 	var secondaryColor string
 
-	for _, color := range *teamColors {
+	for _, color := range teamColors {
 		if color.Type == "primary" {
 			primaryColor = color.HexColor
 		}
@@ -23,7 +23,7 @@ func GetTeamColors(teamColors *[]types.TeamColor) (string, string) {
 	return primaryColor, secondaryColor
 }
 
-func DisplayPlayerCard(primaryColor *string, secondaryColor *string, player *types.Player) string {
+func DisplayPlayerCard(primaryColor string, secondaryColor string, player types.Player) string {
 	jersey := player.Jersey
 	if player.Jersey == "" {
 		jersey = "No jersey number"
@@ -31,21 +31,21 @@ func DisplayPlayerCard(primaryColor *string, secondaryColor *string, player *typ
 
 	cardStyle := lipgloss.NewStyle().
 		Border(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color(*primaryColor)).
-		BorderBackground(lipgloss.Color(*primaryColor)).
+		BorderForeground(lipgloss.Color(primaryColor)).
+		BorderBackground(lipgloss.Color(primaryColor)).
 		Padding(1, 2).
 		Margin(1, 0).
 		Width(32)
 
 	nameStyle := lipgloss.NewStyle().
 		Bold(true).
-		Foreground(lipgloss.Color(*secondaryColor))
+		Foreground(lipgloss.Color(secondaryColor))
 
 	labelStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#9CA3AF"))
 
 	valStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color(*secondaryColor)).
+		Foreground(lipgloss.Color(secondaryColor)).
 		Bold(true)
 
 	content := lipgloss.JoinVertical(
@@ -59,8 +59,8 @@ func DisplayPlayerCard(primaryColor *string, secondaryColor *string, player *typ
 	return cardStyle.Render(content)
 }
 
-func DisplayPlayerCards(primaryColor *string, secondaryColor *string, players *[]types.Player) {
-	for _, player := range *players {
-		fmt.Println(DisplayPlayerCard(primaryColor, secondaryColor, &player))
+func DisplayPlayerCards(primaryColor string, secondaryColor string, players []types.Player) {
+	for _, player := range players {
+		fmt.Println(DisplayPlayerCard(primaryColor, secondaryColor, player))
 	}
 }

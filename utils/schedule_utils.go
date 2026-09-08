@@ -10,10 +10,10 @@ import (
 	"nfl-data/types"
 )
 
-func GetSchedule(teamId *string, year *string, seasonType *string) {
+func GetSchedule(teamId string, year string, seasonType string) {
 	sportradarKey := GetSportraderAPIKey()
 
-	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + *year + "/" + *seasonType + "/schedule.json"
+	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + year + "/" + seasonType + "/schedule.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -41,13 +41,13 @@ func GetSchedule(teamId *string, year *string, seasonType *string) {
 
 	for _, week := range result.Weeks {
 		for _, game := range week.Games {
-			if game.Home.ID == *teamId || game.Away.ID == *teamId {
+			if game.Home.ID == teamId || game.Away.ID == teamId {
 				isHomeTeam := false
-				if game.Home.ID == *teamId {
+				if game.Home.ID == teamId {
 					isHomeTeam = true
 				}
 
-				fmt.Println(cards.DisplayGameCard(&week.Sequence, &game, &isHomeTeam, seasonType))
+				fmt.Println(cards.DisplayGameCard(week.Sequence, game, isHomeTeam, seasonType))
 			}
 		}
 	}

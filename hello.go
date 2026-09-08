@@ -29,7 +29,7 @@ func main() {
 
 			choice := utils.GetTeamInfoChoice()
 			if choice == "roster" {
-				utils.GetTeam(&teamId)
+				utils.GetTeam(teamId)
 			} else {
 				for {
 					year := utils.GetYear()
@@ -43,7 +43,7 @@ func main() {
 							break
 						}
 
-						utils.GetSchedule(&teamId, &year, &seasonType)
+						utils.GetSchedule(teamId, year, seasonType)
 					}
 				}
 			}
