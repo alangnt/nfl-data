@@ -21,13 +21,13 @@ func DisplayGameCard(week int, game types.Game, isHomeTeam bool, seasonType stri
 	timeFormat := "Monday, Jan 2, 2006 at 3:04 PM"
 	date := localTime.Format(timeFormat)
 
-	home_points := game.Scoring.HomePoints
-	away_points := game.Scoring.AwayPoints
+	homePoints := game.Scoring.HomePoints
+	awayPoints := game.Scoring.AwayPoints
 
 	score := "Not played yet"
 	if game.Status == "closed" {
-		home_points_str := strconv.Itoa(home_points)
-		away_points_str := strconv.Itoa(away_points)
+		home_points_str := strconv.Itoa(homePoints)
+		away_points_str := strconv.Itoa(awayPoints)
 
 		score = home_points_str + "-" + away_points_str
 	}
@@ -65,9 +65,9 @@ func DisplayGameCard(week int, game types.Game, isHomeTeam bool, seasonType stri
 
 	var gameResult string
 	if game.Status == "closed" {
-		if (isHomeTeam && home_points > away_points) || (!isHomeTeam && away_points > home_points) {
+		if (isHomeTeam && homePoints > awayPoints) || (!isHomeTeam && awayPoints > homePoints) {
 			gameResult = winStyle.Render("W")
-		} else if home_points == away_points {
+		} else if homePoints == awayPoints {
 			gameResult = tieStyle.Render("Tie")
 		} else {
 			gameResult = lossStyle.Render("L")
