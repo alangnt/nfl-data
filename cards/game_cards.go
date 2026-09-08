@@ -16,8 +16,10 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 		return ""
 	}
 
+	localTime := parsedTime.Local()
+
 	timeFormat := "Monday, Jan 2, 2006 at 3:04 PM"
-	date := parsedTime.Format(timeFormat)
+	date := localTime.Format(timeFormat)
 
 	home_points := game.Scoring.HomePoints
 	away_points := game.Scoring.AwayPoints
