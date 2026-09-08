@@ -32,7 +32,7 @@ func GetSeasonType() string {
 	var seasonType string
 
 	err := huh.NewSelect[string]().
-		Title("What year?").
+		Title("What part of the season?").
 		Options(
 			huh.NewOption("Preseason", "PRE"),
 			huh.NewOption("Regular season", "REG"),
