@@ -8,7 +8,7 @@ import (
 
 func main() {
 	for {
-		conference := utils.GetConference()
+		conference := utils.SelectConference()
 
 		if conference == "exit" {
 			break
@@ -18,27 +18,27 @@ func main() {
 			var teamId string
 
 			if conference == "afc" {
-				teamId = utils.GetAFCTeamId()
+				teamId = utils.SelectAFCTeamId()
 			} else {
-				teamId = utils.GetNFCTeamId()
+				teamId = utils.SelectNFCTeamId()
 			}
 
 			if teamId == "exit" {
 				break
 			}
 
-			choice := utils.GetTeamInfoChoice()
+			choice := utils.SelectTeamInfoChoice()
 			if choice == "roster" {
 				utils.GetTeam(teamId)
 			} else {
 				for {
-					year := utils.GetYear()
+					year := utils.SelectYear()
 					if year == "exit" {
 						break
 					}
 
 					for {
-						seasonType := utils.GetSeasonType()
+						seasonType := utils.SelectSeasonType()
 						if seasonType == "exit" {
 							break
 						}

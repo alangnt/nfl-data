@@ -53,7 +53,7 @@ func GetTeam(teamId string) {
 	positions := slices.Compact(uniquePositions)
 
 	for {
-		position := GetPosition(positions)
+		position := SelectPosition(positions)
 
 		if position == "exit" {
 			break

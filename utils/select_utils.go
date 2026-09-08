@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/huh"
 )
 
-func GetYear() string {
+func SelectYear() string {
 	var year string
 
 	err := huh.NewSelect[string]().
@@ -28,7 +28,7 @@ func GetYear() string {
 	return year
 }
 
-func GetSeasonType() string {
+func SelectSeasonType() string {
 	var seasonType string
 
 	err := huh.NewSelect[string]().
@@ -50,7 +50,7 @@ func GetSeasonType() string {
 	return seasonType
 }
 
-func GetConference() string {
+func SelectConference() string {
 	var conference string
 
 	err := huh.NewSelect[string]().
@@ -71,7 +71,7 @@ func GetConference() string {
 	return conference
 }
 
-func GetAFCTeamId() string {
+func SelectAFCTeamId() string {
 	var teamId string
 
 	err := huh.NewSelect[string]().
@@ -106,7 +106,7 @@ func GetAFCTeamId() string {
 	return teamId
 }
 
-func GetNFCTeamId() string {
+func SelectNFCTeamId() string {
 	var teamId string
 
 	err := huh.NewSelect[string]().
@@ -141,7 +141,7 @@ func GetNFCTeamId() string {
 	return teamId
 }
 
-func GetTeamInfoChoice() string {
+func SelectTeamInfoChoice() string {
 	var choice string
 
 	err := huh.NewSelect[string]().
@@ -161,7 +161,7 @@ func GetTeamInfoChoice() string {
 	return choice
 }
 
-func GetPosition(positions []string) string {
+func SelectPosition(positions []string) string {
 	var choice string
 
 	var options []huh.Option[string]
