@@ -71,8 +71,8 @@ func SelectConference() string {
 	return conference
 }
 
-func SelectAFCTeamId() string {
-	var teamId string
+func SelectAFCTeamID() string {
+	var teamID string
 
 	err := huh.NewSelect[string]().
 		Title("Choose your team").
@@ -95,7 +95,7 @@ func SelectAFCTeamId() string {
 			huh.NewOption("Tennessee Titans", "d26a1ca5-722d-4274-8f97-c92e49c96315"),
 			huh.NewOption("Exit", "exit"),
 		).
-		Value(&teamId).
+		Value(&teamID).
 		Run()
 
 	if err != nil {
@@ -103,11 +103,11 @@ func SelectAFCTeamId() string {
 		os.Exit(1)
 	}
 
-	return teamId
+	return teamID
 }
 
-func SelectNFCTeamId() string {
-	var teamId string
+func SelectNFCTeamID() string {
+	var teamID string
 
 	err := huh.NewSelect[string]().
 		Title("Choose your team").
@@ -130,7 +130,7 @@ func SelectNFCTeamId() string {
 			huh.NewOption("Washington Commanders", "22052ff7-c065-42ee-bc8f-c4691c50e624"),
 			huh.NewOption("Exit", "exit"),
 		).
-		Value(&teamId).
+		Value(&teamID).
 		Run()
 
 	if err != nil {
@@ -138,7 +138,7 @@ func SelectNFCTeamId() string {
 		os.Exit(1)
 	}
 
-	return teamId
+	return teamID
 }
 
 func SelectTeamInfoChoice() string {

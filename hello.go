@@ -15,21 +15,21 @@ func main() {
 		}
 
 		for {
-			var teamId string
+			var teamID string
 
 			if conference == "afc" {
-				teamId = utils.SelectAFCTeamId()
+				teamID = utils.SelectAFCTeamID()
 			} else {
-				teamId = utils.SelectNFCTeamId()
+				teamID = utils.SelectNFCTeamID()
 			}
 
-			if teamId == "exit" {
+			if teamID == "exit" {
 				break
 			}
 
 			choice := utils.SelectTeamInfoChoice()
 			if choice == "roster" {
-				utils.GetTeam(teamId)
+				utils.GetTeam(teamID)
 			} else {
 				for {
 					year := utils.SelectYear()
@@ -43,7 +43,7 @@ func main() {
 							break
 						}
 
-						utils.GetSchedule(teamId, year, seasonType)
+						utils.GetSchedule(teamID, year, seasonType)
 					}
 				}
 			}

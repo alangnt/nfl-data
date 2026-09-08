@@ -10,7 +10,7 @@ import (
 	"nfl-data/types"
 )
 
-func GetSchedule(teamId string, year string, seasonType string) {
+func GetSchedule(teamID string, year string, seasonType string) {
 	sportradarKey := GetSportraderAPIKey()
 
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + year + "/" + seasonType + "/schedule.json"
@@ -41,9 +41,9 @@ func GetSchedule(teamId string, year string, seasonType string) {
 
 	for _, week := range result.Weeks {
 		for _, game := range week.Games {
-			if game.Home.ID == teamId || game.Away.ID == teamId {
+			if game.Home.ID == teamID || game.Away.ID == teamID {
 				isHomeTeam := false
-				if game.Home.ID == teamId {
+				if game.Home.ID == teamID {
 					isHomeTeam = true
 				}
 
