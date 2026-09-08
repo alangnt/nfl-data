@@ -76,7 +76,7 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 		gameResult = ""
 	}
 
-	gameTitle := nameStyle.Render("Game", strconv.Itoa(*week+1), gameResult)
+	gameTitle := nameStyle.Render("Game", strconv.Itoa(*week), gameResult)
 	if *seasonType == "PST" {
 		gameTitle = nameStyle.Render(game.Title, gameResult)
 	}
