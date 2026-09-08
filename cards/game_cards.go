@@ -36,7 +36,7 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *
 		BorderBackground(lipgloss.Color("#FFFFFF")).
 		Padding(1, 2).
 		Margin(1, 0).
-		Width(32)
+		Width(46)
 
 	nameStyle := lipgloss.NewStyle().
 		Bold(true).
