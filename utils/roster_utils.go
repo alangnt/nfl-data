@@ -12,7 +12,7 @@ import (
 )
 
 func GetTeam(teamID string) {
-	sportradarKey := GetSportraderAPIKey()
+	sportradarKey := GetSportradarAPIKey()
 
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + teamID + "/profile.json"
 

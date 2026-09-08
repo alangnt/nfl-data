@@ -11,7 +11,7 @@ import (
 )
 
 func GetSchedule(teamID string, year string, seasonType string) {
-	sportradarKey := GetSportraderAPIKey()
+	sportradarKey := GetSportradarAPIKey()
 
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + year + "/" + seasonType + "/schedule.json"
 
