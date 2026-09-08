@@ -9,7 +9,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool) string {
+func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool, seasonType *string) string {
 	parsedTime, err := time.Parse(time.RFC3339, game.Scheduled)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
@@ -68,9 +68,14 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool) string {
 		gameResult = ""
 	}
 
+	gameTitle := nameStyle.Render("Game", strconv.Itoa(*week+1), gameResult)
+	if *seasonType == "PST" {
+		gameTitle = game.Title
+	}
+
 	content := lipgloss.JoinVertical(
 		lipgloss.Left,
-		nameStyle.Render("Game", strconv.Itoa(*week+1), gameResult),
+		gameTitle,
 		"",
 		lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Home: "), valStyle.Render(game.Home.Name)),
 		lipgloss.JoinHorizontal(lipgloss.Left, labelStyle.Render("Away: "), valStyle.Render(game.Away.Name)),
@@ -82,12 +87,12 @@ func DisplayGameCard(week *int, game *types.Game, isHomeTeam *bool) string {
 	return cardStyle.Render(content)
 }
 
-func DisplayGameCards(teamId *string, games *[]types.Game) {
+func DisplayGameCards(teamId *string, games *[]types.Game, seasonType *string) {
 	for week, game := range *games {
 		isHomeTeam := false
 		if game.Home.ID == *teamId {
 			isHomeTeam = true
 		}
-		fmt.Println(DisplayGameCard(&week, &game, &isHomeTeam))
+		fmt.Println(DisplayGameCard(&week, &game, &isHomeTeam, seasonType))
 	}
 }

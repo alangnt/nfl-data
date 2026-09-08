@@ -16,6 +16,7 @@ type Game struct {
 	Scoring   Scoring  `json:"scoring"`
 	Status    string   `json:"status"`
 	Scheduled string   `json:"scheduled"`
+	Title     string   `json:"title"`
 }
 
 type Week struct {
