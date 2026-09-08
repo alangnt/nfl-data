@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 
 	"nfl-data/cards"
 	"nfl-data/types"
@@ -24,11 +23,7 @@ func GetSchedule(teamId *string, year *string, seasonType *string) {
 	req.Header.Set("accept", "application/json")
 	req.Header.Set("x-api-key", sportradarKey)
 
-	client := &http.Client{
-		Timeout: 10 * time.Second,
-	}
-
-	resp, err := client.Do(req)
+	resp, err := sportradarClient.Do(req)
 	if err != nil || resp.StatusCode != 200 {
 		return
 	}
