@@ -33,12 +33,18 @@ func main() {
 			} else {
 				for {
 					year := utils.GetYear()
-
 					if year == "exit" {
 						break
 					}
 
-					utils.GetSchedule(&teamId, &year)
+					for {
+						seasonType := utils.GetSeasonType()
+						if seasonType == "exit" {
+							break
+						}
+
+						utils.GetSchedule(&teamId, &year, &seasonType)
+					}
 				}
 			}
 		}

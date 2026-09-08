@@ -28,6 +28,28 @@ func GetYear() string {
 	return year
 }
 
+func GetSeasonType() string {
+	var seasonType string
+
+	err := huh.NewSelect[string]().
+		Title("What year?").
+		Options(
+			huh.NewOption("Preseason", "PRE"),
+			huh.NewOption("Regular season", "REG"),
+			huh.NewOption("Postseason", "PST"),
+			huh.NewOption("Exit", "exit"),
+		).
+		Value(&seasonType).
+		Run()
+
+	if err != nil {
+		fmt.Println("Selection cancelled:", err)
+		os.Exit(1)
+	}
+
+	return seasonType
+}
+
 func GetConference() string {
 	var conference string
 
