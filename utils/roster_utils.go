@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -11,12 +12,12 @@ import (
 	"nfl-data/types"
 )
 
-func GetTeam(teamID string, sportradarKey string) {
+func GetTeam(teamID string, sportradarKey string) error {
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + teamID + "/profile.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return
+		return errors.New("An error has occured. Please try again later.")
 	}
 
 	req.Header.Set("accept", "application/json")
@@ -24,7 +25,7 @@ func GetTeam(teamID string, sportradarKey string) {
 
 	resp, err := sportradarClient.Do(req)
 	if err != nil || resp.StatusCode != 200 {
-		return
+		return errors.New("An error has occured. Please try again later.")
 	}
 
 	defer func() {
@@ -35,7 +36,7 @@ func GetTeam(teamID string, sportradarKey string) {
 
 	var result types.Team
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return
+		return errors.New("An error has occured. Please try again later.")
 	}
 
 	primaryColor, secondaryColor := cards.GetTeamColors(result.TeamColors)
@@ -51,7 +52,10 @@ func GetTeam(teamID string, sportradarKey string) {
 	positions := slices.Compact(uniquePositions)
 
 	for {
-		position := SelectPosition(positions)
+		position, err := SelectPosition(positions)
+		if err != nil {
+			return errors.New("An error has occured. Please try again later.")
+		}
 
 		if position == "exit" {
 			break
@@ -66,4 +70,6 @@ func GetTeam(teamID string, sportradarKey string) {
 
 		cards.DisplayPlayerCards(primaryColor, secondaryColor, players)
 	}
+
+	return nil
 }

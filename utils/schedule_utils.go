@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,12 +11,12 @@ import (
 	"nfl-data/types"
 )
 
-func GetSchedule(teamID string, year string, seasonType string, sportradarKey string) {
+func GetSchedule(teamID string, year string, seasonType string, sportradarKey string) error {
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/games/" + year + "/" + seasonType + "/schedule.json"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return
+		return errors.New("An error has occured. Please try again later.")
 	}
 
 	req.Header.Set("accept", "application/json")
@@ -23,7 +24,7 @@ func GetSchedule(teamID string, year string, seasonType string, sportradarKey st
 
 	resp, err := sportradarClient.Do(req)
 	if err != nil || resp.StatusCode != 200 {
-		return
+		return errors.New("An error has occured. Please try again later.")
 	}
 
 	defer func() {
@@ -34,7 +35,7 @@ func GetSchedule(teamID string, year string, seasonType string, sportradarKey st
 
 	var result types.Schedule
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return
+		return errors.New("An error has occured. Please try again later.")
 	}
 
 	for _, week := range result.Weeks {
@@ -49,4 +50,6 @@ func GetSchedule(teamID string, year string, seasonType string, sportradarKey st
 			}
 		}
 	}
+
+	return nil
 }

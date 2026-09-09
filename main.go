@@ -14,7 +14,10 @@ func main() {
 	}
 
 	for {
-		conference := utils.SelectConference()
+		conference, err := utils.SelectConference()
+		if err != nil {
+			os.Exit(1)
+		}
 
 		if conference == "exit" {
 			break
@@ -24,32 +27,56 @@ func main() {
 			var teamID string
 
 			if conference == "afc" {
-				teamID = utils.SelectAFCTeamID()
+				teamID, err = utils.SelectAFCTeamID()
+				if err != nil {
+					os.Exit(1)
+				}
 			} else {
-				teamID = utils.SelectNFCTeamID()
+				teamID, err = utils.SelectNFCTeamID()
+				if err != nil {
+					os.Exit(1)
+				}
 			}
 
 			if teamID == "exit" {
 				break
 			}
 
-			choice := utils.SelectTeamInfoChoice()
+			choice, err := utils.SelectTeamInfoChoice()
+			if err != nil {
+				os.Exit(1)
+			}
+
 			if choice == "roster" {
-				utils.GetTeam(teamID, sportradarKey)
+				err := utils.GetTeam(teamID, sportradarKey)
+				if err != nil {
+					os.Exit(1)
+				}
 			} else {
 				for {
-					year := utils.SelectYear()
+					year, err := utils.SelectYear()
+					if err != nil {
+						os.Exit(1)
+					}
+
 					if year == "exit" {
 						break
 					}
 
 					for {
-						seasonType := utils.SelectSeasonType()
+						seasonType, err := utils.SelectSeasonType()
+						if err != nil {
+							os.Exit(1)
+						}
+
 						if seasonType == "exit" {
 							break
 						}
 
-						utils.GetSchedule(teamID, year, seasonType, sportradarKey)
+						err = utils.GetSchedule(teamID, year, seasonType, sportradarKey)
+						if err != nil {
+							os.Exit(1)
+						}
 					}
 				}
 			}

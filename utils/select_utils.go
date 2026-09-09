@@ -1,13 +1,12 @@
 package utils
 
 import (
-	"fmt"
-	"os"
+	"errors"
 
 	"github.com/charmbracelet/huh"
 )
 
-func SelectYear() string {
+func SelectYear() (string, error) {
 	var year string
 
 	err := huh.NewSelect[string]().
@@ -21,14 +20,13 @@ func SelectYear() string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return year
+	return year, nil
 }
 
-func SelectSeasonType() string {
+func SelectSeasonType() (string, error) {
 	var seasonType string
 
 	err := huh.NewSelect[string]().
@@ -43,14 +41,13 @@ func SelectSeasonType() string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return seasonType
+	return seasonType, nil
 }
 
-func SelectConference() string {
+func SelectConference() (string, error) {
 	var conference string
 
 	err := huh.NewSelect[string]().
@@ -64,14 +61,13 @@ func SelectConference() string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return conference
+	return conference, nil
 }
 
-func SelectAFCTeamID() string {
+func SelectAFCTeamID() (string, error) {
 	var teamID string
 
 	err := huh.NewSelect[string]().
@@ -99,14 +95,13 @@ func SelectAFCTeamID() string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return teamID
+	return teamID, nil
 }
 
-func SelectNFCTeamID() string {
+func SelectNFCTeamID() (string, error) {
 	var teamID string
 
 	err := huh.NewSelect[string]().
@@ -134,14 +129,13 @@ func SelectNFCTeamID() string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return teamID
+	return teamID, nil
 }
 
-func SelectTeamInfoChoice() string {
+func SelectTeamInfoChoice() (string, error) {
 	var choice string
 
 	err := huh.NewSelect[string]().
@@ -154,14 +148,13 @@ func SelectTeamInfoChoice() string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return choice
+	return choice, nil
 }
 
-func SelectPosition(positions []string) string {
+func SelectPosition(positions []string) (string, error) {
 	var choice string
 
 	var options []huh.Option[string]
@@ -177,9 +170,8 @@ func SelectPosition(positions []string) string {
 		Run()
 
 	if err != nil {
-		fmt.Println("Selection cancelled:", err)
-		os.Exit(1)
+		return "", errors.New("Selection cancelled")
 	}
 
-	return choice
+	return choice, nil
 }
