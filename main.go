@@ -2,11 +2,17 @@ package main
 
 import (
 	"nfl-data/utils"
+	"os"
 
 	_ "github.com/lib/pq"
 )
 
 func main() {
+	sportradarKey, err := utils.GetSportradarAPIKey()
+	if err != nil {
+		os.Exit(1)
+	}
+
 	for {
 		conference := utils.SelectConference()
 
@@ -29,7 +35,7 @@ func main() {
 
 			choice := utils.SelectTeamInfoChoice()
 			if choice == "roster" {
-				utils.GetTeam(teamID)
+				utils.GetTeam(teamID, sportradarKey)
 			} else {
 				for {
 					year := utils.SelectYear()
@@ -43,7 +49,7 @@ func main() {
 							break
 						}
 
-						utils.GetSchedule(teamID, year, seasonType)
+						utils.GetSchedule(teamID, year, seasonType, sportradarKey)
 					}
 				}
 			}

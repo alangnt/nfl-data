@@ -11,9 +11,7 @@ import (
 	"nfl-data/types"
 )
 
-func GetTeam(teamID string) {
-	sportradarKey := GetSportradarAPIKey()
-
+func GetTeam(teamID string, sportradarKey string) {
 	url := "https://api.sportradar.com/nfl/official/trial/v7/en/teams/" + teamID + "/profile.json"
 
 	req, err := http.NewRequest("GET", url, nil)

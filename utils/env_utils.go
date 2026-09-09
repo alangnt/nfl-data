@@ -1,22 +1,22 @@
 package utils
 
 import (
-	"log"
+	"errors"
 	"os"
 
 	"github.com/joho/godotenv"
 )
 
-func GetSportradarAPIKey() string {
+func GetSportradarAPIKey() (string, error) {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		return "", errors.New("Error loading .env file")
 	}
 
 	sportradarKey := os.Getenv("SPORTRADAR_API_KEY")
 	if sportradarKey == "" {
-		log.Fatal("API key required")
+		return "", errors.New("API key required")
 	}
 
-	return sportradarKey
+	return sportradarKey, nil
 }
