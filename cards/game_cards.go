@@ -9,7 +9,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DisplayGameCard(week int, game types.Game, isHomeTeam bool, seasonType string) string {
+func RenderGameCard(week int, game types.Game, isHomeTeam bool, seasonType string) string {
 	parsedTime, err := time.Parse(time.RFC3339, game.Scheduled)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)

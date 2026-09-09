@@ -23,7 +23,7 @@ func GetTeamColors(teamColors []types.TeamColor) (string, string) {
 	return primaryColor, secondaryColor
 }
 
-func DisplayPlayerCard(primaryColor string, secondaryColor string, player types.Player) string {
+func RenderPlayerCard(primaryColor string, secondaryColor string, player types.Player) string {
 	jersey := player.Jersey
 	if player.Jersey == "" {
 		jersey = "No jersey number"
@@ -61,6 +61,6 @@ func DisplayPlayerCard(primaryColor string, secondaryColor string, player types.
 
 func DisplayPlayerCards(primaryColor string, secondaryColor string, players []types.Player) {
 	for _, player := range players {
-		fmt.Println(DisplayPlayerCard(primaryColor, secondaryColor, player))
+		fmt.Println(RenderPlayerCard(primaryColor, secondaryColor, player))
 	}
 }

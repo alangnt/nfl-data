@@ -46,7 +46,7 @@ func GetSchedule(teamID string, year string, seasonType string, sportradarKey st
 					isHomeTeam = true
 				}
 
-				fmt.Println(cards.DisplayGameCard(week.Sequence, game, isHomeTeam, seasonType))
+				fmt.Println(cards.RenderGameCard(week.Sequence, game, isHomeTeam, seasonType))
 			}
 		}
 	}
